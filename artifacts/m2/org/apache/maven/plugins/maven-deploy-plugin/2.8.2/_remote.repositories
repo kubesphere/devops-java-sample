@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:11:37 CST 2019
+maven-deploy-plugin-2.8.2.pom>repo.jenkins-ci.org=
+maven-deploy-plugin-2.8.2.jar>repo.jenkins-ci.org=

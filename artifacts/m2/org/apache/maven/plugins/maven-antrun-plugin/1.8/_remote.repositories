@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:11:45 CST 2019
+maven-antrun-plugin-1.8.jar>repo.jenkins-ci.org=
+maven-antrun-plugin-1.8.pom>repo.jenkins-ci.org=

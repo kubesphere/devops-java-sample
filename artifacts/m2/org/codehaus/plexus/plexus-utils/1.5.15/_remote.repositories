@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:28:20 CST 2019
+plexus-utils-1.5.15.jar>repo.jenkins-ci.org=
+plexus-utils-1.5.15.pom>repo.jenkins-ci.org=

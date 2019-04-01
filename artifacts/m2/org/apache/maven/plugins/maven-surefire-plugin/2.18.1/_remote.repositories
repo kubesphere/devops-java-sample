@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:11:33 CST 2019
+maven-surefire-plugin-2.18.1.jar>repo.jenkins-ci.org=
+maven-surefire-plugin-2.18.1.pom>repo.jenkins-ci.org=

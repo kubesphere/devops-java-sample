@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:11:29 CST 2019
+maven-jar-plugin-2.6.jar>repo.jenkins-ci.org=
+maven-jar-plugin-2.6.pom>repo.jenkins-ci.org=

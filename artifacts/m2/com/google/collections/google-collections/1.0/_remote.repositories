@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:28:08 CST 2019
+google-collections-1.0.jar>repo.jenkins-ci.org=
+google-collections-1.0.pom>repo.jenkins-ci.org=

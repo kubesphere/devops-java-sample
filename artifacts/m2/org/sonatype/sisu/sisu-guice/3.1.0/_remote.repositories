@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:30:10 CST 2019
+sisu-guice-3.1.0-no_aop.jar>repo.jenkins-ci.org=
+sisu-guice-3.1.0.pom>repo.jenkins-ci.org=

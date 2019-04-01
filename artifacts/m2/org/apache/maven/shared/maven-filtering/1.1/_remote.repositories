@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:27:28 CST 2019
+maven-filtering-1.1.pom>repo.jenkins-ci.org=
+maven-filtering-1.1.jar>repo.jenkins-ci.org=

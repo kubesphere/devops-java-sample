@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:11:44 CST 2019
+jooq-codegen-maven-3.8.4.jar>repo.jenkins-ci.org=
+jooq-codegen-maven-3.8.4.pom>repo.jenkins-ci.org=

@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:15:34 CST 2019
+commons-lang-2.4.jar>repo.jenkins-ci.org=
+commons-lang-2.4.pom>repo.jenkins-ci.org=

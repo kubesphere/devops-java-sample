@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:11:41 CST 2019
+maven-site-plugin-3.5.1.jar>repo.jenkins-ci.org=
+maven-site-plugin-3.5.1.pom>repo.jenkins-ci.org=

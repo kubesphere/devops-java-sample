@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:30:10 CST 2019
+sisu-inject-bean-1.4.2.jar>repo.jenkins-ci.org=
+sisu-inject-bean-1.4.2.pom>repo.jenkins-ci.org=

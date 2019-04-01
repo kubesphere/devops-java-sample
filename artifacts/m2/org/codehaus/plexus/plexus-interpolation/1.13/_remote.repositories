@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:27:32 CST 2019
+plexus-interpolation-1.13.jar>repo.jenkins-ci.org=
+plexus-interpolation-1.13.pom>repo.jenkins-ci.org=

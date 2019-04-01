@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 27 14:16:50 CST 2019
+snakeyaml-1.17.jar>repo.jenkins-ci.org=
+snakeyaml-1.17.pom>repo.jenkins-ci.org=
