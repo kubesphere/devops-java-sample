@@ -10,7 +10,6 @@ pipeline {
     }
 
     environment {
-        SOURCE_DIR_NAME = 'devops-sample-s2i'
         HARBOR_CREDENTIAL_ID = 'harbor-id'
         GITLAB_CREDENTIAL_ID = 'gitlab-id'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
@@ -30,8 +29,7 @@ pipeline {
         stage ('unit test') {
             steps {
                 container ('maven') {
-                    sh 'cd $SOURCE_DIR_NAME'
-                    sh 'mvn -o -f $SOURCE_DIR_NAME/src -gs `pwd`/$SOURCE_DIR_NAME/src/configuration/settings.xml test'
+                    sh 'mvn -o -gs `pwd`/configuration/settings.xml test'
                 }
             }
         }
@@ -39,7 +37,7 @@ pipeline {
         stage ('build & push') {
             steps {
                 container ('maven') {
-                    sh 'mvn -o -Dmaven.test.skip=true -f $SOURCE_DIR_NAME/src -gs `pwd`/$SOURCE_DIR_NAME/src/configuration/settings.xml clean package'
+                    sh 'mvn -o -Dmaven.test.skip=true -gs `pwd`/configuration/settings.xml clean package'
                     sh 'docker build -t $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
                     withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$HARBOR_CREDENTIAL_ID" ,)]) {
                         sh 'echo "$DOCKER_PASSWORD" | docker login $REDISTRY -u "$DOCKER_USERNAME" --password-stdin'

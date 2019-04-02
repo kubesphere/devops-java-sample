@@ -3,7 +3,7 @@
     <pluginGroup>org.jenkins-ci.tools</pluginGroup>
   </pluginGroups>
 
-  <localRepository>${PWD}/devops-sample-s2i/artifacts/m2</localRepository>
+  <localRepository>${PWD}/artifacts/m2</localRepository>
 
   <profiles>
     <!-- Give access to Jenkins plugins -->
