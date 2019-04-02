@@ -16,7 +16,7 @@ pipeline {
         REDISTRY = 'harbor.devops.kubesphere.local:30280'
         NAMESPACE = 'library'
         GITLAB_ACCOUNT = 'admin1'
-        APP_NAME = 'devops-sample'
+        APP_NAME = 'devops-sample-s2i'
     }
 
     stages {
