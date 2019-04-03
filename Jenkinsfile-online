@@ -38,7 +38,7 @@ pipeline {
             steps {
                 container ('maven') {
                     sh 'mvn -Dmaven.test.skip=true clean package'
-                    sh 'docker build -t $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
+                    sh 'docker build -f Dockerfile-online -t $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
                     withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$HARBOR_CREDENTIAL_ID" ,)]) {
                         sh 'echo "$DOCKER_PASSWORD" | docker login $REDISTRY -u "$DOCKER_USERNAME" --password-stdin'
                         sh 'docker push  $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER'
