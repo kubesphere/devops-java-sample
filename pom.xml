@@ -8,6 +8,18 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>devops-sample :: HelloWorld Demo</name>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- Sonar -->
+    <!-- The destination file for the code coverage report has to be set to the same value
+         in the parent pom and in each module pom. Then JaCoCo will add up information in
+         the same report, so that, it will give the cross-module code coverage. -->
+    <sonar.jacoco.reportPaths>${PWD}/./target/jacoco.exec</sonar.jacoco.reportPaths>
+    <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
+  </properties>
+
   <!-- Spring Boot 启动父依赖 -->
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -51,6 +63,35 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.2</version>
+                <configuration>
+                <append>true</append>
+                </configuration>
+                <executions>
+                <execution>
+                    <id>agent-for-ut</id>
+                    <goals>
+                    <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>agent-for-it</id>
+                    <goals>
+                    <goal>prepare-agent-integration</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>jacoco-site</id>
+                    <phase>verify</phase>
+                    <goals>
+                    <goal>report</goal>
+                    </goals>
+                </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

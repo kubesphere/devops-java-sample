@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Apr 04 14:22:31 CST 2019
+junit-4.8.2.jar>repo.jenkins-ci.org=
+junit-4.8.2.pom>repo.jenkins-ci.org=

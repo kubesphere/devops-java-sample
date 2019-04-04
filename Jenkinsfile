@@ -29,7 +29,7 @@ pipeline {
         stage ('unit test') {
             steps {
                 container ('maven') {
-                    sh 'mvn -o -gs `pwd`/configuration/settings.xml test'
+                    sh 'mvn clean -o -gs `pwd`/configuration/settings.xml test'
                 }
             }
         }

@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Apr 04 14:22:31 CST 2019
+aether-spi-1.7.jar>repo.jenkins-ci.org=
+aether-spi-1.7.pom>repo.jenkins-ci.org=

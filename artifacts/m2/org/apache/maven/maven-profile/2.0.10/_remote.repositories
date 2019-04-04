@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Apr 04 14:22:31 CST 2019
+maven-profile-2.0.10.jar>repo.jenkins-ci.org=
+maven-profile-2.0.10.pom>repo.jenkins-ci.org=

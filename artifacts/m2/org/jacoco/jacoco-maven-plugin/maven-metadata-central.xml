@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.jacoco</groupId>
+  <artifactId>jacoco-maven-plugin</artifactId>
+  <versioning>
+    <latest>0.8.3</latest>
+    <release>0.8.3</release>
+    <versions>
+      <version>0.5.3.201107060350</version>
+      <version>0.5.4.201111111111</version>
+      <version>0.5.5.201112152213</version>
+      <version>0.5.6.201201232323</version>
+      <version>0.5.7.201204190339</version>
+      <version>0.5.8.201207111220</version>
+      <version>0.5.9.201207300726</version>
+      <version>0.5.10.201208310627</version>
+      <version>0.6.0.201210061924</version>
+      <version>0.6.1.201212231917</version>
+      <version>0.6.2.201302030002</version>
+      <version>0.6.3.201306030806</version>
+      <version>0.6.4.201312101107</version>
+      <version>0.6.5.201403032054</version>
+      <version>0.7.0.201403182114</version>
+      <version>0.7.1.201405082137</version>
+      <version>0.7.2.201409121644</version>
+      <version>0.7.3.201502191951</version>
+      <version>0.7.4.201502262128</version>
+      <version>0.7.5.201505241946</version>
+      <version>0.7.6.201602180812</version>
+      <version>0.7.7.201606060606</version>
+      <version>0.7.8</version>
+      <version>0.7.9</version>
+      <version>0.8.0</version>
+      <version>0.8.1</version>
+      <version>0.8.2</version>
+      <version>0.8.3</version>
+    </versions>
+    <lastUpdated>20190124122808</lastUpdated>
+  </versioning>
+</metadata>
