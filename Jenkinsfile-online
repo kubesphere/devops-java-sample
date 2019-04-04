@@ -13,8 +13,8 @@ pipeline {
         HARBOR_CREDENTIAL_ID = 'harbor-id'
         GITLAB_CREDENTIAL_ID = 'gitlab-id'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
-        REDISTRY = 'harbor.devops.kubesphere.local:30280'
-        NAMESPACE = 'library'
+        REDISTRY = 'docker.io'
+        NAMESPACE = 'docker_username'
         GITLAB_ACCOUNT = 'admin1'
         APP_NAME = 'devops-sample-s2i'
     }
