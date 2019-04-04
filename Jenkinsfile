@@ -36,13 +36,15 @@ pipeline {
 
         stage('sonarqube analysis') {
           steps {
-            withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-              withSonarQubeEnv('sonar') {
-                sh "mvn -o -gs `pwd`/configuration/settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.sources=.  -Dsonar.login=$SONAR_TOKEN"
+            container ('maven') {
+              withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                withSonarQubeEnv('sonar') {
+                  sh "mvn sonar:sonar -o -gs `pwd`/configuration/settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.sources=.  -Dsonar.login=$SONAR_TOKEN"
+                }
               }
-            }
-            timeout(time: 1, unit: 'HOURS') {
-              waitForQualityGate abortPipeline: true
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
             }
           }
         }

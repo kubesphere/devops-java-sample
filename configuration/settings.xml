@@ -30,7 +30,7 @@
       <id>sonar</id>
       <activation>
           <activeByDefault>true</activeByDefault>
-      </activation>        
+      </activation>    
     </profile>
   </profiles>
   <mirrors>
