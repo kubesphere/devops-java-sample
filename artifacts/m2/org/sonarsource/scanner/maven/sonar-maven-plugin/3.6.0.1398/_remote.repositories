@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Apr 04 10:32:31 CST 2019
+sonar-maven-plugin-3.6.0.1398.jar>repo.jenkins-ci.org=
+sonar-maven-plugin-3.6.0.1398.pom>repo.jenkins-ci.org=

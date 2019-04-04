@@ -1,6 +1,7 @@
 <settings>
   <pluginGroups>
     <pluginGroup>org.jenkins-ci.tools</pluginGroup>
+    <pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
   </pluginGroups>
 
   <localRepository>${PWD}/artifacts/m2</localRepository>
@@ -24,6 +25,12 @@
           <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
       </pluginRepositories>
+    </profile>
+    <profile>
+      <id>sonar</id>
+      <activation>
+          <activeByDefault>true</activeByDefault>
+      </activation>        
     </profile>
   </profiles>
   <mirrors>
