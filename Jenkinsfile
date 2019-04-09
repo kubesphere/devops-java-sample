@@ -95,7 +95,7 @@ pipeline {
                     sh 'git config --global user.email "kubesphere@yunify.com" '
                     sh 'git config --global user.name "kubesphere" '
                     sh 'git tag -a $TAG_NAME -m "$TAG_NAME" '
-                    sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@gitlab.devops.kubesphere.local:30080/$GITLAB_ACCOUNT/$APP_NAME.git --tags'
+                    sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@gitlab.devops.kubesphere.local:30080/$GITLAB_ACCOUNT/devops-sample-s2i.git --tags'
                   }
                 sh 'docker tag  $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$NAMESPACE/$APP_NAME:$TAG_NAME '
                 sh 'docker push  $REDISTRY/$NAMESPACE/$APP_NAME:$TAG_NAME '
