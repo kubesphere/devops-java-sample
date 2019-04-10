@@ -6,7 +6,7 @@ metadata:
     component: ks-sample-dev
     tier: backend
   name: ks-sample-dev
-  namespace: kubesphere-dev
+  namespace: kubesphere-sample-dev
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
