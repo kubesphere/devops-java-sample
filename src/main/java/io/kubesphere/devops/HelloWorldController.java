@@ -14,6 +14,6 @@ public class HelloWorldController {
 
     @RequestMapping("/")
     public String sayHello() {
-        return "Hello,KubeSphere!";
+        return "Hello,World!";
     }
 }
