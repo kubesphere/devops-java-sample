@@ -38,8 +38,10 @@ pipeline {
         stage('sonarqube analysis') {
           steps {
             container ('maven') {
-              withSonarQubeEnv('sonar') {
-                sh "mvn sonar:sonar -o -gs `pwd`/configuration/settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.login=$SONAR_TOKEN_ID"
+              withCredentials([string(credentialsId: "$SONAR_TOKEN_ID", variable: 'SONAR_TOKEN')]) {
+                withSonarQubeEnv('sonar') {
+                 sh "mvn sonar:sonar -o -gs `pwd`/configuration/settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.login=$SONAR_TOKEN_ID"
+                }
               }
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
