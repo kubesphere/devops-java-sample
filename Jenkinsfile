@@ -17,7 +17,7 @@ pipeline {
         NAMESPACE = 'library'
         GITLAB_ACCOUNT = 'admin1'
         APP_NAME = 'devops-sample-s2i'
-        SONAR_TOKEN_ID= 'sonar-token'
+        SONAR_CREDENTIAL_ID= 'sonar-token'
     }
 
     stages {
@@ -38,8 +38,10 @@ pipeline {
         stage('sonarqube analysis') {
           steps {
             container ('maven') {
-              withSonarQubeEnv('sonar') {
-                sh "mvn sonar:sonar -o -gs `pwd`/configuration/settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.login=$SONAR_TOKEN_ID"
+              withCredentials([string(credentialsId: "$SONAR_CREDENTIAL_ID", variable: 'SONAR_TOKEN')]) {
+                withSonarQubeEnv('sonar') {
+                 sh "mvn sonar:sonar -o -gs `pwd`/configuration/settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.login=$SONAR_TOKEN"
+                }
               }
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
