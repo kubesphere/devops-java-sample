@@ -40,7 +40,7 @@ pipeline {
             container ('maven') {
               withCredentials([string(credentialsId: "$SONAR_TOKEN_ID", variable: 'SONAR_TOKEN')]) {
                 withSonarQubeEnv('sonar') {
-                  sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ks-devops -Dsonar.sources=.  -Dsonar.login=$SONAR_TOKEN"
+                 sh "mvn sonar:sonar -o -gs `pwd`/configuration/settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.login=$SONAR_TOKEN_ID"
                 }
               }
               timeout(time: 1, unit: 'HOURS') {
