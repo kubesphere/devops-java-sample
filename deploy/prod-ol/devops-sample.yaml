@@ -3,23 +3,28 @@ kind: Deployment
 metadata:
   labels:
     app: kubesphere
-    component: ks-sample-dev
+    component: ks-sample
     tier: backend
-  name: ks-sample-dev
-  namespace: kubesphere-sample-dev
+  name: ks-sample
+  namespace: kubesphere-sample-prod
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: kubesphere
-      component: ks-sample-dev
+      component: ks-sample
       tier: backend
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
       labels:
         app: kubesphere
-        component: ks-sample-dev
+        component: ks-sample
         tier: backend
     spec:
       containers:
@@ -28,13 +33,13 @@ spec:
               value: js|html
             - name: CACHE_PUBLIC_EXPIRATION
               value: 3d
-          image: $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER
+          image: $REDISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME
           readinessProbe:
-            httpGet:
-              path: /
-              port: 8080
+              httpGet:
+                path: /
+                port: 8080
           imagePullPolicy: Always
-          name: ks-sample
+          name: ks
           ports:
             - containerPort: 8080
               protocol: TCP
