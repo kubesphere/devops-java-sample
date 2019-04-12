@@ -16,7 +16,7 @@ pipeline {
         REDISTRY = 'harbor.devops.kubesphere.local:30280'
         HARBORNAMESPACE = 'library'
         GITLAB_ACCOUNT = 'admin1'
-        APP_NAME = 'devops-sample-s2i'
+        APP_NAME = 'devops-java-sample'
         SONAR_CREDENTIAL_ID= 'sonar-token'
     }
 
@@ -97,7 +97,7 @@ pipeline {
                     sh 'git config --global user.email "kubesphere@yunify.com" '
                     sh 'git config --global user.name "kubesphere" '
                     sh 'git tag -a $TAG_NAME -m "$TAG_NAME" '
-                    sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@gitlab.devops.kubesphere.local:30080/$GITLAB_ACCOUNT/devops-sample-s2i.git --tags'
+                    sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@gitlab.devops.kubesphere.local:30080/$GITLAB_ACCOUNT/devops-java-sample.git --tags'
                   }
                 sh 'docker tag  $REDISTRY/$HARBORNAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$HARBORNAMESPACE/$APP_NAME:$TAG_NAME '
                 sh 'docker push  $REDISTRY/$HARBORNAMESPACE/$APP_NAME:$TAG_NAME '
