@@ -14,9 +14,9 @@ pipeline {
         GITLAB_CREDENTIAL_ID = 'gitlab-id'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
         REDISTRY = 'harbor.devops.kubesphere.local:30280'
-        NAMESPACE = 'library'
+        HARBOR_NAMESPACE = 'library'
         GITLAB_ACCOUNT = 'admin1'
-        APP_NAME = 'devops-sample-s2i'
+        APP_NAME = 'devops-java-sample'
         SONAR_CREDENTIAL_ID= 'sonar-token'
     }
 
@@ -54,10 +54,10 @@ pipeline {
             steps {
                 container ('maven') {
                     sh 'mvn -o -Dmaven.test.skip=true -gs `pwd`/configuration/settings.xml clean package'
-                    sh 'docker build -t $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
+                    sh 'docker build -t $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
                     withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$HARBOR_CREDENTIAL_ID" ,)]) {
                         sh 'echo "$DOCKER_PASSWORD" | docker login $REDISTRY -u "$DOCKER_USERNAME" --password-stdin'
-                        sh 'docker push  $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER'
+                        sh 'docker push  $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER'
                     }
                 }
             }
@@ -69,8 +69,8 @@ pipeline {
            }
            steps{
                 container ('maven') {
-                  sh 'docker tag  $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$NAMESPACE/$APP_NAME:latest '
-                  sh 'docker push  $REDISTRY/$NAMESPACE/$APP_NAME:latest '
+                  sh 'docker tag  $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:latest '
+                  sh 'docker push  $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:latest '
                 }
            }
         }
@@ -97,10 +97,10 @@ pipeline {
                     sh 'git config --global user.email "kubesphere@yunify.com" '
                     sh 'git config --global user.name "kubesphere" '
                     sh 'git tag -a $TAG_NAME -m "$TAG_NAME" '
-                    sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@gitlab.devops.kubesphere.local:30080/$GITLAB_ACCOUNT/devops-sample-s2i.git --tags'
+                    sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@gitlab.devops.kubesphere.local:30080/$GITLAB_ACCOUNT/devops-java-sample.git --tags'
                   }
-                sh 'docker tag  $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$NAMESPACE/$APP_NAME:$TAG_NAME '
-                sh 'docker push  $REDISTRY/$NAMESPACE/$APP_NAME:$TAG_NAME '
+                sh 'docker tag  $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:$TAG_NAME '
+                sh 'docker push  $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:$TAG_NAME '
           }
           }
         }
