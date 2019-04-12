@@ -14,10 +14,10 @@ pipeline {
         GITHUB_CREDENTIAL_ID = 'github-id'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
         REDISTRY = 'docker.io'
-        NAMESPACE = 'docker_username'
+        DOCKERHUB_NAMESPACE = 'docker_username'
         GITHUB_ACCOUNT = 'kubesphere'
         APP_NAME = 'devops-sample-s2i'
-        SONAR_CREDENTIAL_ID= 'sonar-token'
+        SONAR_TOKEN_ID= 'sonar-token'
     }
 
     stages {
@@ -38,10 +38,10 @@ pipeline {
         stage('sonarqube analysis') {
           steps {
             container ('maven') {
-              withCredentials([string(credentialsId: "$SONAR_CREDENTIAL_ID", variable: 'SONAR_TOKEN')]) {
-                withSonarQubeEnv('sonar') {
-                 sh "mvn sonar:sonar -o -gs `pwd`/configuration/settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.login=$SONAR_TOKEN"
-                }
+-             withCredentials([string(credentialsId: "$SONAR_CREDENTIAL_ID", variable: 'SONAR_TOKEN')]) {
+-               withSonarQubeEnv('sonar') {
+-                sh "mvn sonar:sonar -o -gs `pwd`/configuration/settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.login=$SONAR_TOKEN"
+-               }
               }
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
@@ -54,10 +54,10 @@ pipeline {
             steps {
                 container ('maven') {
                     sh 'mvn -o -Dmaven.test.skip=true -gs `pwd`/configuration/settings.xml clean package'
-                    sh 'docker build -f Dockerfile-online -t $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
+                    sh 'docker build -f Dockerfile-online -t $REDISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
                     withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$DOCKER_CREDENTIAL_ID" ,)]) {
                         sh 'echo "$DOCKER_PASSWORD" | docker login $REDISTRY -u "$DOCKER_USERNAME" --password-stdin'
-                        sh 'docker push  $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER'
+                        sh 'docker push  $REDISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER'
                     }
                 }
             }
@@ -69,8 +69,8 @@ pipeline {
            }
            steps{
                 container ('maven') {
-                  sh 'docker tag  $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$NAMESPACE/$APP_NAME:latest '
-                  sh 'docker push  $REDISTRY/$NAMESPACE/$APP_NAME:latest '
+                  sh 'docker tag  $REDISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
+                  sh 'docker push  $REDISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
                 }
            }
         }
@@ -81,7 +81,7 @@ pipeline {
           }
           steps {
             input(id: 'deploy-to-dev', message: 'deploy to dev?')
-            kubernetesDeploy(configs: 'deploy/dev/**', enableConfigSubstitution: true, kubeconfigId: "$KUBECONFIG_CREDENTIAL_ID")
+            kubernetesDeploy(configs: 'deploy/dev-ol/**', enableConfigSubstitution: true, kubeconfigId: "$KUBECONFIG_CREDENTIAL_ID")
           }
         }
         stage('push with tag'){
@@ -99,8 +99,8 @@ pipeline {
                     sh 'git tag -a $TAG_NAME -m "$TAG_NAME" '
                     sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@github.com/$GITHUB_ACCOUNT/devops-sample-s2i.git --tags'
                   }
-                sh 'docker tag  $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$NAMESPACE/$APP_NAME:$TAG_NAME '
-                sh 'docker push  $REDISTRY/$NAMESPACE/$APP_NAME:$TAG_NAME '
+                sh 'docker tag  $REDISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REDISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '
+                sh 'docker push  $REDISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '
           }
           }
         }
@@ -112,7 +112,7 @@ pipeline {
           }
           steps {
             input(id: 'deploy-to-production', message: 'deploy to production?')
-            kubernetesDeploy(configs: 'deploy/prod/**', enableConfigSubstitution: true, kubeconfigId: "$KUBECONFIG_CREDENTIAL_ID")
+            kubernetesDeploy(configs: 'deploy/prod-ol/**', enableConfigSubstitution: true, kubeconfigId: "$KUBECONFIG_CREDENTIAL_ID")
           }
         }
     }

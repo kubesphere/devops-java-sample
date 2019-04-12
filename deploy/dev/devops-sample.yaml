@@ -29,6 +29,10 @@ spec:
             - name: CACHE_PUBLIC_EXPIRATION
               value: 3d
           image: $REDISTRY/$NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
           imagePullPolicy: Always
           name: ks-sample
           ports:
