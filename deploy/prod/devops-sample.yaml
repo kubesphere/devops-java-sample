@@ -33,7 +33,7 @@ spec:
               value: js|html
             - name: CACHE_PUBLIC_EXPIRATION
               value: 3d
-          image: $REDISTRY/$HARBORNAMESPACE/$APP_NAME:$TAG_NAME
+          image: $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:$TAG_NAME
           readinessProbe:
               httpGet:
                 path: /
