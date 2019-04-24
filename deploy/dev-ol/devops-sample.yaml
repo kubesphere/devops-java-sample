@@ -33,6 +33,9 @@ spec:
             httpGet:
               path: /
               port: 8080
+            timeoutSeconds: 10
+            failureThreshold: 30
+            periodSeconds: 5
           imagePullPolicy: Always
           name: ks-sample
           ports:

@@ -35,9 +35,12 @@ spec:
               value: 3d
           image: $REDISTRY/$HARBOR_NAMESPACE/$APP_NAME:$TAG_NAME
           readinessProbe:
-              httpGet:
-                path: /
-                port: 8080
+            httpGet:
+              path: /
+              port: 8080
+            timeoutSeconds: 10
+            failureThreshold: 30
+            periodSeconds: 5
           imagePullPolicy: Always
           name: ks
           ports:
