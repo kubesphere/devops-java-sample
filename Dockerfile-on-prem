@@ -1,8 +1,10 @@
-FROM harbor.devops.kubesphere.local:30280/library/java:openjdk-8-jre-alpine
+FROM java:openjdk-8-jre-alpine
 
-WORKDIR /home
+WORKDIR /app
 
-COPY target/*.jar /home
+COPY target/*.jar /app
+
+WORKDIR /app
 
 ENTRYPOINT java -jar *.jar
 
