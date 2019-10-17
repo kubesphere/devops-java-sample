@@ -1,3 +1,1 @@
 S2I_DESTINATION=/tmp
-MAVEN_ARGS_APPEND=-Dmaven.repo.local=/tmp/src/artifacts/m2 -o
-DISABLE_ARTIFACTS=true
