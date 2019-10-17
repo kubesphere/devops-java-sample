@@ -50,11 +50,9 @@ pipeline {
         }
 
         stage('push latest'){
-           when{
-             branch 'master'
-           }
            steps{
                 container ('maven') {
+                  input(id: 'push-latest', message: 'push image with tag latest?')
                   sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
                   sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
                 }
