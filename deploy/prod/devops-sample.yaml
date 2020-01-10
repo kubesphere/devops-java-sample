@@ -17,8 +17,8 @@ spec:
       tier: backend
   strategy:
     rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+      maxSurge: 100%
+      maxUnavailable: 100%
     type: RollingUpdate
   template:
     metadata:
