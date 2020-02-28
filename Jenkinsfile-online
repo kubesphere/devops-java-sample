@@ -18,41 +18,28 @@ pipeline {
     }
 
     stages {
+        stage ('add proxy'){
+            steps{
+                scripts{
+                  git config --global https.proxy ‘http://192.168.20.165:1088’
+                  git config --global http.proxy ‘http://192.168.20.165:1088’
+                }
+            }
+        }
+        
+        stage ('show proxy'){
+            steps{
+                scripts{
+                  env 
+                  git config --global --get http.proxy
+                  git config --global --get http.proxy
+                }
+            }
+        }
+        
         stage ('checkout scm') {
             steps {
                 checkout(scm)
             }
         }
-
-        stage ('unit test') {
-            steps {
-                container ('maven') {
-                    sh 'mvn clean test'
-                }
-            }
-        }
-
-        stage ('build & push') {
-            steps {
-                container ('maven') {
-                    sh 'mvn -Dmaven.test.skip=true clean package'
-                    archiveArtifacts 'target/*.jar'
-                    sh 'docker build -f Dockerfile-online -t $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BUILD_NUMBER .'
-                    withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$DOCKER_CREDENTIAL_ID" ,)]) {
-                        sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
-                        sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BUILD_NUMBER'
-                    }
-                }
-            }
-        }
-
-        stage('push latest'){
-           steps{
-                container ('maven') {
-                  sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:cache '
-                  sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:cache '
-                }
-           }
-        }
-    }
 }
