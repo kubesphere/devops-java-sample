@@ -5,7 +5,7 @@ metadata:
     app: kubesphere
     component: ks-sample-dev
   name: ks-sample-dev
-  namespace: kubesphere-sample-dev
+  namespace: kubesphere-sample-dev-zx
 spec:
   ports:
     - name: http
