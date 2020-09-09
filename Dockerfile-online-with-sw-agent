@@ -19,8 +19,8 @@ FROM openjdk:8-jre-alpine AS build
 LABEL maintainer="tanjian@apache.org"
 
 # Install required packages
-RUN echo "http://mirrors.aliyun.com/alpine/v3.8/main" > /etc/apk/repositories && \
-    echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories  && \
+RUN echo "http://mirrors.aliyun.com/alpine/v3.9/main" > /etc/apk/repositories && \
+    echo "http://mirrors.aliyun.com/alpine/v3.9/community" >> /etc/apk/repositories  && \
     apk update upgrade && \
     apk add --no-cache bash python su-exec
 
