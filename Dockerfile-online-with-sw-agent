@@ -19,14 +19,10 @@ FROM openjdk:8-jre-alpine AS build
 LABEL maintainer="tanjian@apache.org"
 
 # Install required packages
-RUN apk add --no-cache \
-    bash \
-    python \
-    su-exec
-
-RUN echo "http://mirrors.aliyun.com/alpine/v3.9/main" > /etc/apk/repositories && \
-    echo "http://mirrors.aliyun.com/alpine/v3.9/community" >> /etc/apk/repositories
-
+RUN echo "http://mirrors.aliyun.com/alpine/v3.8/main" > /etc/apk/repositories && \
+    echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories  && \
+    apk update upgrade && \
+    apk add --no-cache bash python su-exec
 
 ENV SKYWALKING_HOME=/skywalking
 RUN mkdir -p "${SKYWALKING_HOME}"
@@ -94,6 +90,9 @@ RUN set -eux; \
 FROM java:openjdk-8-jre-alpine
 
 COPY --from=builder /skywalking /home
+
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone
 
 WORKDIR /home
 
