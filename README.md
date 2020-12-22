@@ -12,7 +12,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
 
 ## 项目使用
 
-* 项目完成fork后，根据教程修改 Jenkinsfile-online中的环境变量为您自己值。教程中如您跳过snoar代码质量检查可以删除，上述环境中的SNOAR_CREDENTIAL_ID。
+* 项目完成fork后，根据教程修改 Jenkinsfile-online中的环境变量为您自己值。
 
 
 
