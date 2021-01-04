@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.kubesphere.devops</groupId>
-  <artifactId>devops-sample</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>devops-sample :: HelloWorld Demo</name>
+    <groupId>io.kubesphere.devops</groupId>
+    <artifactId>devops-sample</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>devops-sample :: HelloWorld Demo</name>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <!-- Sonar -->
-    <!-- The destination file for the code coverage report has to be set to the same value
+        <!-- Sonar -->
+        <!-- The destination file for the code coverage report has to be set to the same value
          in the parent pom and in each module pom. Then JaCoCo will add up information in
          the same report, so that, it will give the cross-module code coverage. -->
-    <sonar.jacoco.reportPaths>${PWD}/./target/jacoco.exec</sonar.jacoco.reportPaths>
-    <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
-  </properties>
+        <sonar.jacoco.reportPaths>${PWD}/./target/jacoco.exec</sonar.jacoco.reportPaths>
+        <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
+    </properties>
 
-  <!-- Spring Boot 启动父依赖 -->
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.4.1.BUILD-SNAPSHOT</version>
-  </parent>
-
+    <!-- Spring Boot 启动父依赖 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.11.RELEASE</version>
+    </parent>
+    <!--更新maven 阿里云仓库镜像地址-->
     <repositories>
         <repository>
-            <id>spring-snapshots</id>
-            <url>http://repo.spring.io/snapshot</url>
-            <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-        <repository>
-            <id>spring-milestones</id>
-            <url>http://repo.spring.io/milestone</url>
+            <id>spring</id>
+            <url>https://maven.aliyun.com/repository/spring</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>spring-snapshots</id>
-            <url>http://repo.spring.io/snapshot</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <url>http://repo.spring.io/milestone</url>
+            <id>spring</id>
+            <url>https://maven.aliyun.com/repository/spring</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </pluginRepository>
     </pluginRepositories>
 
@@ -68,28 +70,28 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.2</version>
                 <configuration>
-                <append>true</append>
+                    <append>true</append>
                 </configuration>
                 <executions>
-                <execution>
-                    <id>agent-for-ut</id>
-                    <goals>
-                    <goal>prepare-agent</goal>
-                    </goals>
-                </execution>
-                <execution>
-                    <id>agent-for-it</id>
-                    <goals>
-                    <goal>prepare-agent-integration</goal>
-                    </goals>
-                </execution>
-                <execution>
-                    <id>jacoco-site</id>
-                    <phase>verify</phase>
-                    <goals>
-                    <goal>report</goal>
-                    </goals>
-                </execution>
+                    <execution>
+                        <id>agent-for-ut</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>agent-for-it</id>
+                        <goals>
+                            <goal>prepare-agent-integration</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
