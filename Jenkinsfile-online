@@ -12,7 +12,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIAL_ID = 'dockerhub-id'
         GITHUB_CREDENTIAL_ID = 'github-id'
-        KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
+        KUBECONFIG_CREDENTIAL_ID = 'kubeconfig-demo'
         REGISTRY = 'docker.io'
         DOCKERHUB_NAMESPACE = 'hungwen0425'
         GITHUB_ACCOUNT = 'hungwen0425'
