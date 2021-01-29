@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 29 08:53:25 CST 2021
+commons-compress-1.18.jar>repo.jenkins-ci.org=
+commons-compress-1.18.pom>repo.jenkins-ci.org=

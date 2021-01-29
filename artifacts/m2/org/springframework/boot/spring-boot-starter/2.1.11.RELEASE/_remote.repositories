@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 29 08:52:01 CST 2021
+spring-boot-starter-2.1.11.RELEASE.jar>repo.jenkins-ci.org=
+spring-boot-starter-2.1.11.RELEASE.pom>repo.jenkins-ci.org=

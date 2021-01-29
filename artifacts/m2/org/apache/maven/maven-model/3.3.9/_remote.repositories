@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 29 08:53:57 CST 2021
+maven-model-3.3.9.jar>repo.jenkins-ci.org=
+maven-model-3.3.9.pom>repo.jenkins-ci.org=
