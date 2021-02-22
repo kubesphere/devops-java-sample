@@ -22,8 +22,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
 
   ##   Jenkinsfile-online文件介绍
 
-  考虑到初学者可能对Jenkins文件不熟悉，对此文件进行介绍，方便您理解我们的流水线做了什么.
-  Jenkinsfile-online文件内容如下：
+  考虑到初学者可能对Jenkins文件不熟悉，对此文件进行介绍，方便您理解我们的流水线做了什么。Jenkinsfile-online文件内容如下：
 
   ``` yaml
   pipeline {
