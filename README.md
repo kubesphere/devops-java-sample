@@ -23,27 +23,112 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
   ##   Jenkinsfile-online文件介绍
 
   考虑到初学者可能对Jenkins文件不熟悉，对此文件进行介绍，方便您理解我们的流水线做了什么.
+  Jenkinsfile-online文件内容如下：
 
   ``` yaml
   pipeline {
-    agent {
-      node {
-        label 'maven'   // 定义流水线的代理为 maven，kubesphere内置了四个默认代理，在目前版本当中我们内置了 4 种类型的 podTemplate，base、						//	nodejs、maven、go，并且在 Pod 中提供了隔离的 Docker 环境。具体参见官方文档
-      }
+  agent {
+    node {
+      label 'maven'
     }
-  
-      parameters {
-          string(name:'TAG_NAME',defaultValue: '',description:'') //定义 流水线描述
-      }
-          environment {                                        //定义流水线环境变量
-          DOCKER_CREDENTIAL_ID = 'dockerhub-id'
-          GITHUB_CREDENTIAL_ID = 'github-id'
-          KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
-          REGISTRY = 'docker.io'
-          DOCKERHUB_NAMESPACE = 'docker_username'
-          GITHUB_ACCOUNT = 'kubesphere'
-          APP_NAME = 'devops-java-sample'
-      }
+  }
+
+    parameters {
+        string(name:'TAG_NAME',defaultValue: '',description:'')
+    }
+
+    environment {
+        DOCKER_CREDENTIAL_ID = 'dockerhub-id'
+        GITHUB_CREDENTIAL_ID = 'github-id'
+        KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
+        REGISTRY = 'docker.io'
+        DOCKERHUB_NAMESPACE = 'docker_username'
+        GITHUB_ACCOUNT = 'kubesphere'
+        APP_NAME = 'devops-java-sample'
+    }
+
+    stages {
+        stage ('checkout scm') {
+            steps {
+                checkout(scm)
+            }
+        }
+
+        stage ('unit test') {
+            steps {
+                container ('maven') {
+                    sh 'mvn clean  -gs `pwd`/configuration/settings.xml test'
+                }
+            }
+        }
+ 
+        stage ('build & push') {
+            steps {
+                container ('maven') {
+                    sh 'mvn  -Dmaven.test.skip=true -gs `pwd`/configuration/settings.xml clean package'
+                    sh 'docker build -f Dockerfile-online -t $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER .'
+                    withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$DOCKER_CREDENTIAL_ID" ,)]) {
+                        sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
+                        sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER'
+                    }
+                }
+            }
+        }
+
+        stage('push latest'){
+           when{
+             branch 'master'
+           }
+           steps{
+                container ('maven') {
+                  sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
+                  sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
+                }
+           }
+        }
+
+        stage('deploy to dev') {
+          when{
+            branch 'master'
+          }
+          steps {
+            input(id: 'deploy-to-dev', message: 'deploy to dev?')
+            kubernetesDeploy(configs: 'deploy/dev-ol/**', enableConfigSubstitution: true, kubeconfigId: "$KUBECONFIG_CREDENTIAL_ID")
+          }
+        }
+        stage('push with tag'){
+          when{
+            expression{
+              return params.TAG_NAME =~ /v.*/
+            }
+          }
+          steps {
+              container ('maven') {
+                input(id: 'release-image-with-tag', message: 'release image with tag?')
+                  withCredentials([usernamePassword(credentialsId: "$GITHUB_CREDENTIAL_ID", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh 'git config --global user.email "kubesphere@yunify.com" '
+                    sh 'git config --global user.name "kubesphere" '
+                    sh 'git tag -a $TAG_NAME -m "$TAG_NAME" '
+                    sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@github.com/$GITHUB_ACCOUNT/devops-java-sample.git --tags --ipv4'
+                  }
+                sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '
+                sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '
+          }
+          }
+        }
+        stage('deploy to production') {
+          when{
+            expression{
+              return params.TAG_NAME =~ /v.*/
+            }
+          }
+          steps {
+            input(id: 'deploy-to-production', message: 'deploy to production?')
+            kubernetesDeploy(configs: 'deploy/prod-ol/**', enableConfigSubstitution: true, kubeconfigId: "$KUBECONFIG_CREDENTIAL_ID")
+          }
+        }
+    }
+}
   ```
 
   **[Jenkins Agent 说明]( https://v2-1.docs.kubesphere.io/docs/zh-CN/devops/jenkins-agent/)**
@@ -71,24 +156,8 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
           }
   ```
 
-  * **第三步** 执行单元测试
 
-  ```yaml
-      stage('push latest'){
-             when{
-               branch 'master'
-             }
-             steps{
-                  container ('maven') {
-                    sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
-                    sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
-                  }
-             }
-          }
-  
-  ```
-
-  * **第四步** 编译并推送
+  * **第三步** 编译并推送
 
   ```yaml
           stage ('build & push') {
@@ -105,7 +174,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
           }
   ```
 
-    * **第五步** 推送至docker hub latest版本
+    * **第四步** 推送至docker hub latest版本
 
   ```yaml
       stage('push latest'){
@@ -122,7 +191,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
   
   ```
 
-    * **第六步** 弹出审核确认，是否部署到开发环境
+    * **第五步** 弹出审核确认，是否部署到开发环境
 
   ```yaml
    stage('deploy to dev') {
@@ -156,7 +225,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
           }
   ```
 
-    * **第七步** 部署到生产环境
+    * **第六步** 部署到生产环境
 
   ```yaml
         stage('deploy to production') {
