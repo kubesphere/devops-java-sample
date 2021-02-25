@@ -24,6 +24,28 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
 
   考虑到初学者可能对Jenkins文件不熟悉，对此文件进行介绍，方便您理解我们的流水线做了什么.
 
+  ``` yaml
+  pipeline {
+    agent {
+      node {
+        label 'maven'   // 定义流水线的代理为 maven，kubesphere内置了四个默认代理，在目前版本当中我们内置了 4 种类型的 podTemplate，base、						//	nodejs、maven、go，并且在 Pod 中提供了隔离的 Docker 环境。具体参见官方文档
+      }
+    }
+
+      parameters {
+          string(name:'TAG_NAME',defaultValue: '',description:'') //定义 流水线描述
+      }
+          environment {                                        //定义流水线环境变量
+          DOCKER_CREDENTIAL_ID = 'dockerhub-id'
+          GITHUB_CREDENTIAL_ID = 'github-id'
+          KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
+          REGISTRY = 'docker.io'
+          DOCKERHUB_NAMESPACE = 'docker_username'
+          GITHUB_ACCOUNT = 'kubesphere'
+          APP_NAME = 'devops-java-sample'
+      }
+  ```
+
   **[Jenkins Agent 说明]( https://v2-1.docs.kubesphere.io/docs/zh-CN/devops/jenkins-agent/)**
 
   * **第一步**检出代码
