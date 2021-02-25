@@ -14,7 +14,7 @@ pipeline {
         GITHUB_CREDENTIAL_ID = 'github-id'
         KUBECONFIG_CREDENTIAL_ID = 'demo-kubeconfig'
         REGISTRY = 'docker.io'
-        DOCKERHUB_NAMESPACE = 'docker_username'
+        DOCKERHUB_NAMESPACE = 'shaowenchen'
         GITHUB_ACCOUNT = 'kubesphere'
         APP_NAME = 'devops-java-sample'
     }
@@ -23,6 +23,19 @@ pipeline {
         stage ('checkout scm') {
             steps {
                 checkout(scm)
+            }
+        }
+
+        stage ('install podman') {
+            steps {
+                container ('maven') {
+                    sh '''
+                    curl -L -o /etc/yum.repos.d/devel:kubic:libcontainers:stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_7/devel:kubic:libcontainers:stable.repo
+                    yum -y install podman
+                    mv  /usr/bin/docker /usr/bin/docker_ce
+                    ln -s /usr/bin/podman /usr/bin/docker
+                    '''
+                }
             }
         }
 
