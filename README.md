@@ -12,7 +12,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
 
 ## 项目使用
 
-* 项目完成fork后，根据教程修改 Jenkinsfile-online中的环境变量为您自己值。
+* 项目完成fork后，根据教程修改 Jenkinsfile-online中的环境变量为您自己的值。
 
 
 
@@ -31,7 +31,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
         label 'maven'   // 定义流水线的代理为 maven，kubesphere内置了四个默认代理，在目前版本当中我们内置了 4 种类型的 podTemplate，base、						//	nodejs、maven、go，并且在 Pod 中提供了隔离的 Docker 环境。具体参见官方文档
       }
     }
-  
+
       parameters {
           string(name:'TAG_NAME',defaultValue: '',description:'') //定义 流水线描述
       }
@@ -71,24 +71,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
           }
   ```
 
-  * **第三步** 执行单元测试
-
-  ```yaml
-      stage('push latest'){
-             when{
-               branch 'master'
-             }
-             steps{
-                  container ('maven') {
-                    sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
-                    sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
-                  }
-             }
-          }
-  
-  ```
-
-  * **第四步** 编译并推送
+  * **第三步** 编译并推送
 
   ```yaml
           stage ('build & push') {
@@ -105,7 +88,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
           }
   ```
 
-    * **第五步** 推送至docker hub latest版本
+    * **第四步** 推送至docker hub latest版本
 
   ```yaml
       stage('push latest'){
@@ -122,7 +105,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
   
   ```
 
-    * **第六步** 弹出审核确认，是否部署到开发环境
+    * **第五步** 弹出审核确认，是否部署到开发环境
 
   ```yaml
    stage('deploy to dev') {
@@ -156,7 +139,7 @@ Jenkinsfile in SCM 意为将 Jenkinsfile 文件本身作为源代码管理 (Sour
           }
   ```
 
-    * **第七步** 部署到生产环境
+    * **第六步** 部署到生产环境
 
   ```yaml
         stage('deploy to production') {
