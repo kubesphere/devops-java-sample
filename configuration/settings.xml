@@ -11,7 +11,7 @@
     <profile>
       <id>jenkins</id>
       <activation>
-        <activeByDefault>true</activeByDefault> <!-- change this to false, if you don't like to have it on per default -->
+        <activeByDefault>false</activeByDefault> <!-- change this to false, if you don't like to have it on per default -->
       </activation>
       <repositories>
         <repository>
@@ -29,11 +29,17 @@
     <profile>
       <id>sonar</id>
       <activation>
-          <activeByDefault>true</activeByDefault>
-      </activation>    
+        <activeByDefault>true</activeByDefault>
+      </activation>
     </profile>
   </profiles>
   <mirrors>
+    <mirror>
+      <id>aliyunmaven</id>
+      <mirrorOf>central</mirrorOf>
+      <name>aliyun maven</name>
+      <url>https://maven.aliyun.com/repository/central</url>
+    </mirror>
     <mirror>
       <id>repo.jenkins-ci.org</id>
       <url>https://repo.jenkins-ci.org/public/</url>

@@ -12,4 +12,3 @@ For more information about how to use the KubeSphere DevOps system, you can refe
 - [Create a Pipeline Using Graphical Editing Panels](https://kubesphere.io/docs/devops-user-guide/how-to-use/create-a-pipeline-using-graphical-editing-panel/)
 - [Build and Deploy a Maven Project](https://kubesphere.io/docs/devops-user-guide/examples/a-maven-project/)
 - [Source to Image: Publish an App without a Dockerfile](https://kubesphere.io/docs/project-user-guide/image-builder/source-to-image/)
-
