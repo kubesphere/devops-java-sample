@@ -1,0 +1,3 @@
+FROM alpine:3.13.5
+
+COPY artifacts/m2/ /root/.m2/
