@@ -17,6 +17,7 @@ pipeline {
         DOCKERHUB_NAMESPACE = 'docker_username'
         GITHUB_ACCOUNT = 'kubesphere'
         APP_NAME = 'devops-java-sample'
+        SONAR_CREDENTIAL_ID='sonar-token'
     }
 
     stages {
