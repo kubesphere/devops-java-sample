@@ -9,7 +9,7 @@ metadata:
   namespace: kubesphere-sample-dev
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: kubesphere
