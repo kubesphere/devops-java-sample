@@ -12,7 +12,7 @@ spec:
       port: 8080
       protocol: TCP
       targetPort: 8080
-      nodePort: 30861
+      nodePort: 30863
   selector:
     app: kubesphere
     component: ks-sample-dev
