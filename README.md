@@ -1,3 +1,6 @@
+> **_NOTICE:_**  Give [some historic reasons](https://github.com/kubesphere/devops-java-sample/issues/76), this repo has been archived. Please move forward to [devops-maven-sample](https://github.com/kubesphere/devops-maven-sample) if you want to help us improve the sample project.
+
+
 ## Repo Introduction
 
 > English | [中文](README_zh.md)
